@@ -39,7 +39,7 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    protected User() {
+    public User() {  //dalem public bo blad wyrzucalo w dostepie w klasie
     }
 
     public Long getId() {
