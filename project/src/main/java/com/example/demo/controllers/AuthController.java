@@ -1,5 +1,11 @@
 package com.example.demo.controller;
 
+import jakarta.validation.Valid;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.security.RoleRepository;
@@ -23,7 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
         // sprawdzanie czy ktos taki nie istnieje
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -56,9 +62,19 @@ public class AuthController {
 
 // do odebrania danych z Jsona
 class RegisterRequest {
+
+    @NotBlank(message = "Email nie może być pusty")
+    @Email(message = "Podano niepoprawny format email")
     private String email;
+
+    @NotBlank(message = "Hasło nie może być puste")
+    @Size(min = 6, message = "Hasło musi mieć minimum 6 znaków")
     private String password;
+
+    @NotBlank(message = "Imię nie może być puste")
     private String firstName;
+
+    @NotBlank(message = "Nazwisko nie może być puste")
     private String lastName;
 
     public String getEmail() { return email; }
