@@ -25,4 +25,15 @@ public class BookController {
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
         return ResponseEntity.ok(bookService.addBook(book));
     }
+
+    @PutMapping("/api/admin/books/{id}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) {
+        return ResponseEntity.ok(bookService.updateBook(id, bookDetails));
+    }
+
+    @DeleteMapping("/api/admin/books/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return ResponseEntity.ok("Książka została usunięta z bazy.");
+    }
 }
