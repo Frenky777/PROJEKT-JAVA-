@@ -29,7 +29,7 @@ public class Reservation {
     @Column(name = "expires_at")
     private LocalDateTime expiresAt;
 
-    protected Reservation() {
+    public Reservation() {
     }
 
     public Long getId() {
