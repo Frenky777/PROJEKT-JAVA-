@@ -75,6 +75,7 @@ public class LoanService {
     }
 
     // historia usera
+    @Transactional
     public List<LoanHistory> getUserHistory(String userEmail) {
         return loanHistoryRepository.findByUserEmail(userEmail);
     }

@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.model.LoanHistory;
 import com.example.demo.service.LoanService;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class LoanController {
     // wypożyczenie POST /api/loans/borrow/{bookId}
     @PostMapping("/borrow/{bookId}")
     public ResponseEntity<?> borrowBook(@PathVariable Long bookId, Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(401).body("Błąd: Musisz być zalogowany, aby wypożyczyć książkę");
+        }
         try {
             LoanHistory loan = loanService.borrowBook(bookId, principal.getName());
             return ResponseEntity.ok(loan);
@@ -42,6 +46,7 @@ public class LoanController {
 
     // historia GET /api/loans/my-history
     @GetMapping("/my-history")
+    @Transactional
     public ResponseEntity<List<LoanHistory>> getMyHistory(Principal principal) {
         return ResponseEntity.ok(loanService.getUserHistory(principal.getName()));
     }

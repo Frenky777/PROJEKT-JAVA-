@@ -1,8 +1,10 @@
 package com.example.demo.model;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "books")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,17 @@ public class Book {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    public Book() {
+    }
+
+   // konstruktor do buildera
+    private Book(Builder builder) {
+        this.title = builder.title;
+        this.author = builder.author;
+        this.isbn = builder.isbn;
+        this.quantity = builder.quantity;
+    }
 
     public Long getId() {
         return id;
@@ -58,5 +71,40 @@ public class Book {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+
+
+    // wzorzec projektowy builder do bezpiecznego zarządzania obiektami
+    public static class Builder {
+        private String title;
+        private String author;
+        private String isbn;
+        private Integer quantity;
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder author(String author) {
+            this.author = author;
+            return this;
+        }
+
+        public Builder isbn(String isbn) {
+            this.isbn = isbn;
+            return this;
+        }
+
+        public Builder quantity(Integer quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        // metoda zwracajaca obiekt
+        public Book build() {
+            return new Book(this);
+        }
     }
 }
