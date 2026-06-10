@@ -32,7 +32,7 @@ public class LoanHistory {
     @Column(name = "returned_at")
     private LocalDateTime returnedAt;
 
-    protected LoanHistory() {
+    public LoanHistory() {
     }
 
     public Long getId() {
