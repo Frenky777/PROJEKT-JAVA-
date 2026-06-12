@@ -75,4 +75,14 @@ public class Reservation {
     public void setExpiresAt(LocalDateTime expiresAt) {
         this.expiresAt = expiresAt;
     }
+
+    @Transient
+    public boolean isStatusActive() {
+        return status != null && status.isActive();
+    }
+
+    @Transient
+    public String getStatusDescription() {
+        return status == null ? null : status.description();
+    }
 }

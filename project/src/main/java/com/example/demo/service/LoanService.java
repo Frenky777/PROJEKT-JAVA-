@@ -58,12 +58,7 @@ public class LoanService {
         LoanHistory loan = loanHistoryRepository.findById(loanId)
                 .orElseThrow(() -> new RuntimeException("Nie znaleziono takiego wypożyczenia"));
 
-        if (loan.getStatus() == LoanStatus.RETURNED) {
-            throw new RuntimeException("Ta książka została już wcześniej zwrócona!");
-        }
-
-        // zmiana statusu i wpisanie daty zwrotu
-        loan.setStatus(LoanStatus.RETURNED);
+        loan.setStatus(loan.getStatus().markReturned());
         loan.setReturnedAt(LocalDateTime.now());
 
         // zmiana stanu magazynowego dodajemy 1 do stanu
