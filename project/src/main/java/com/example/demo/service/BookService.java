@@ -19,8 +19,15 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book addBook(Book book) {
-        return bookRepository.save(book);
+    public Book addBook(Book bookRequest) {
+        Book newBook = new Book.Builder()
+                .title(bookRequest.getTitle())
+                .author(bookRequest.getAuthor())
+                .isbn(bookRequest.getIsbn())
+                .quantity(bookRequest.getQuantity())
+                .build();
+
+        return bookRepository.save(newBook);
     }
     // aktualizacja książki
     public Book updateBook(Long id, Book bookDetails) {
