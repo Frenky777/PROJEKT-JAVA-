@@ -86,4 +86,14 @@ public class LoanHistory {
     public void setReturnedAt(LocalDateTime returnedAt) {
         this.returnedAt = returnedAt;
     }
+
+    @Transient
+    public boolean isStatusActive() {
+        return status != null && status.isActive();
+    }
+
+    @Transient
+    public String getStatusDescription() {
+        return status == null ? null : status.description();
+    }
 }
